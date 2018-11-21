@@ -10,8 +10,7 @@ _cache_home = "."
 _cache_filename = "translation-cache.json"
 _translated_text_length = 0
 
-service_account_json_path = os.getenv("GOOGLE_SERVICE_ACCOUNT_JSON")
-translate_client = translate.Client.from_service_account_json(service_account_json_path)
+translate_client = translate.Client()
 
 
 def calculate_fee(text_len, dollar_per_currency=None):
@@ -48,6 +47,7 @@ def cache_translation(callback):
         with open(file_path, "w") as f:
             json.dump(cache, f, indent=4)
         return result
+
     return decorated
 
 
