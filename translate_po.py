@@ -4,11 +4,14 @@ import json
 import os
 import sys
 
+from time import sleep
+
 from google.cloud import translate
 
 _cache_home = "."
 _cache_filename = "translation-cache.json"
 _translated_text_length = 0
+_api_call_count = 0
 
 translate_client = translate.Client()
 
@@ -55,9 +58,15 @@ def cache_translation(callback):
 def translate(text, target_lang):
     if text == "":
         return ""
-    global _translated_text_length
+    global _translated_text_length, _api_call_count
     _translated_text_length += len(text)
+
+    if _api_call_count % 10 == 0:
+        sleep(1)
+
     translation = translate_client.translate(text, target_language=target_lang)
+    _api_call_count += 1
+
     return translation.get('translatedText')
 
 
@@ -84,6 +93,7 @@ def parse_po(filepath, target_lang):
         processing_msgid = False
         processing_msgstr = False
         msgid = ""
+
         for line in f:
             cleaned = line.strip(" \n")
             if processing_msgstr:
