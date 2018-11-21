@@ -12,13 +12,17 @@ or [my Japanese blog article](https://nwpct1.hatenablog.com/entry/google-transla
 This requires Python3 and `google-cloud-translate` library.
 
 ```console
-$ pip install --upgrade google-cloud-translate
-$ export GOOGLE_SERVICE_ACCOUNT_JSON=/path/to/service-account-credential.json
+$ pip install -r requirements.txt
 ```
 
 ## Usage
 
+```console
+$ export GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account-credential.json
+$ python translate_po.py /path/tp/po_file.po > translated_po_file.po
+```
 
+#### Help
 ```console
 $ python translate_po.py --help
 usage: translate_po.py [-h] [--lang LANG] [--currency CURRENCY] filepath
